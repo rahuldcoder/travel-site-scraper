@@ -222,10 +222,6 @@ def write_in_csv(items, filename='results.csv',
 # MAIN
 # ---------------------------------------------------------------------
 
-DB_HOST     = 'localhost'
-DB_DATABASE = 'tripadvisor'
-DB_PORT     = 3306
-DB_TABLE    = 'reviews'
 DB_COLUMN   = 'review_body'
 
 
