@@ -2,7 +2,7 @@ import requests
 from bs4 import BeautifulSoup  
 import csv                     
 import webbrowser              
-
+import json
 
 
 def display(content, filename='output.html'):
@@ -97,7 +97,7 @@ def parse(session, url):
 
         items += subpage_items
     
-        if len(subpage_items) < 5:
+        if len(subpage_items) < 5 :
             break
 
         offset += 5
@@ -194,66 +194,47 @@ def parse_reviews(session, url):
         }
 
         items.append(item)
+
+      
+        for key,val in item.items():
+            print(' ', key, ':', val)
+
     return items    
 
   
-#----------------------------------------------------------------------
-# CSV
-#----------------------------------------------------------------------
-
-def write_in_csv(items, filename='results.csv',
-                  headers=['hotel name', 'review title', 'review body',
-                           'review date', 'contributions', 'helpful vote',
-                           'user name' , 'user location', 'rating'],
-                  mode='w'):
-
-    print('--- CSV ---')
-
-    with open(filename, mode) as csvfile:
-        csv_file = csv.DictWriter(csvfile, headers)
-
-        if mode == 'w': # don't write headers if you append to existing file
-            csv_file.writeheader()
-
-        csv_file.writerows(items)
-
-
 # ---------------------------------------------------------------------
 # MAIN
 # ---------------------------------------------------------------------
 
-DB_COLUMN   = 'review_body'
+def main(start_urls):
 
+    DB_COLUMN   = 'review_body'
 
+    lang = 'in'
 
-# some URLs for testing
-start_urls = [
-    'https://www.tripadvisor.ca/Hotel_Review-g1480252-d316623-Reviews-Kuredu_Island_Resort_Spa-Kuredu.html',
-    #'https://www.tripadvisor.com/Hotel_Review-g294229-d481832-Reviews-Pullman_Jakarta_Indonesia-Jakarta_Java.html',
-    #'https://www.tripadvisor.com/Hotel_Review-g562819-d289642-Reviews-Hotel_Caserio-Playa_del_Ingles_Maspalomas_Gran_Canaria_Canary_Islands.html',
-    #'https://www.tripadvisor.com/Hotel_Review-g60795-d102542-Reviews-Courtyard_Philadelphia_Airport-Philadelphia_Pennsylvania.html',
-    #'https://www.tripadvisor.com/Hotel_Review-g60795-d122332-Reviews-The_Ritz_Carlton_Philadelphia-Philadelphia_Pennsylvania.html',
-]
+    headers = [
+    
+        DB_COLUMN, #'review_body',
+    
+    ]
+            
+    for url in start_urls:
 
-lang = 'in'
+        # get all reviews for 'url' and 'lang'
+        items = scrape(url, lang)
 
-headers = [
- 
-    DB_COLUMN, #'review_body',
- 
-]
-           
-for url in start_urls:
+        if not items:
+            print('No reviews')
+               
+        else:
+      
+            filename = url.split('Reviews-')[1][:-5] + '__' + lang
+            print('filename:', filename)
+            with open(filename+'.txt','w') as file_handler:
+                for item in items:
+                    for value in item.values():
+                        file_handler.write(value)
+                        file_handler.write('\n')
 
-    # get all reviews for 'url' and 'lang'
-    items = scrape(url, lang)
-
-    if not items:
-        print('No reviews')
-    else:
-        # write in CSV
-        filename = url.split('Reviews-')[1][:-5] + '__' + lang
-        print('filename:', filename)
-        write_in_csv(items, filename + '.csv', headers, mode='w')
-        
-        
+if __name__ == '__main__':
+    main(start_urls)        
