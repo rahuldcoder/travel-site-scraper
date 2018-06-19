@@ -41,10 +41,10 @@ for directory in headers:
         if (url.startswith('https://www.tripadvisor') ): 
             trip_advisor_urls.append(url)
           
-   # get_review.main(trip_advisor_urls)
+    get_review.main(trip_advisor_urls,directory)
 
     oyester_urls = list()
     for url in all_urls:
         if ( url.startswith('https://www.oyster.com') ) :
             oyester_urls.append(url)
-    pros_cons.main(oyester_urls)        
+    pros_cons.main(oyester_urls,directory)        

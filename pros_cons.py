@@ -2,7 +2,7 @@ import requests
 from bs4 import BeautifulSoup
 import pprint
 
-def parser(url):
+def parser(url,directory):
     page = requests.get(url)
     soup = BeautifulSoup(page.text,'html.parser')
 
@@ -15,7 +15,9 @@ def parser(url):
     section_cons = list ( filter (lambda item : item != new_line_char ,section_cons ) )
 
 
-    file_name = url[39:]
+    file_name = url[23:]
+    file_name = directory+'/'+file_name.replace('/','-')
+    print(url)
 
     with open(file_name+'-PROS.txt','w') as file_handle:
         
@@ -31,11 +33,11 @@ def parser(url):
 
 
 # Enter the url for the Oyester website
-def main(urls):
+def main(urls,directory):
     pp = pprint.PrettyPrinter(indent=4)
   
     for url in urls:
-        parser(url)
+        parser(url,directory)
 
 if __name__ == '__main__':
-    main(urls)   
+    main(urls,directory)   

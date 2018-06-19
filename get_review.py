@@ -206,7 +206,7 @@ def parse_reviews(session, url):
 # MAIN
 # ---------------------------------------------------------------------
 
-def main(start_urls):
+def main(start_urls,directory):
 
     DB_COLUMN   = 'review_body'
 
@@ -228,13 +228,14 @@ def main(start_urls):
                
         else:
       
-            filename = url.split('Reviews-')[1][:-5] + '__' + lang
+            filename = directory+'/'+url.split('Reviews-')[1][:-5] + '__' + lang
             print('filename:', filename)
             with open(filename+'.txt','w') as file_handler:
                 for item in items:
                     for value in item.values():
                         file_handler.write(value)
                         file_handler.write('\n')
+                        file_handler.write('-------------------------------------------------------------------')
 
 if __name__ == '__main__':
     main(start_urls)        
