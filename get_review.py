@@ -235,7 +235,7 @@ def main(start_urls,directory):
                     for value in item.values():
                         file_handler.write(value)
                         file_handler.write('\n')
-                        file_handler.write('-------------------------------------------------------------------')
+                        file_handler.write('-------------------------------------------------------------------'+'\n\n')
 
 if __name__ == '__main__':
     main(start_urls)        
