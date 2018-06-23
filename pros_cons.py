@@ -3,7 +3,7 @@ from bs4 import BeautifulSoup
 import pprint
 
 def parser(url,directory):
-    page = requests.get(url)
+    page = requests.get(url[1])
     soup = BeautifulSoup(page.text,'html.parser')
 
     section_pros = soup.find('section',{'class' : 'pros'}).ul.contents
@@ -15,8 +15,8 @@ def parser(url,directory):
     section_cons = list ( filter (lambda item : item != new_line_char ,section_cons ) )
 
 
-    file_name = url[23:]
-    file_name = directory+'/'+file_name.replace('/','-')
+    file_name = url[0]
+    file_name = directory+'/'+str(file_name)
     print(url)
 
     with open(file_name+'-PROS.txt','w') as file_handle:

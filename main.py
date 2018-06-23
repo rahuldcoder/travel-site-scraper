@@ -5,8 +5,8 @@ import get_review
 import pros_cons
 
 
-filename = input('Enter the csv file'+'\n')
-
+#filename = input('Enter the csv file'+'\n')
+filename = 'Rahul.csv'
 
 #reading csv file
 try :
@@ -25,26 +25,29 @@ for directory in headers :
 # dictionary of query items
 query_dict = dict.fromkeys(headers)
 
-# getting query for each folders
-
-for directory in headers :
-    queries = list()
-    print('Enter the space separated queries for '+directory)
-    queries = input().split()
-    query_dict[directory] = queries
 
 for directory in headers:
     all_urls = df[directory]
   #  print(all_urls.tolist() )
     trip_advisor_urls = list()
+    trip_advisor_urls_no = list()
+    count = 0
     for url in all_urls:
         if (url.startswith('https://www.tripadvisor') ): 
             trip_advisor_urls.append(url)
-          
-    get_review.main(trip_advisor_urls,directory)
+            trip_advisor_urls_no.append(count)
+        count = count + 1  
+
+    trip_advisor_data = zip(trip_advisor_urls_no,trip_advisor_urls)    
+    get_review.main(trip_advisor_data,directory)
 
     oyester_urls = list()
+    oyester_urls_no = list()
+    count = 0
     for url in all_urls:
         if ( url.startswith('https://www.oyster.com') ) :
             oyester_urls.append(url)
-    pros_cons.main(oyester_urls,directory)        
+            oyester_urls_no.append(count)
+        count = count + 1    
+    oyester_data = zip(oyester_urls_no,oyester_urls)    
+    pros_cons.main(oyester_data,directory)        

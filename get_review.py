@@ -221,14 +221,14 @@ def main(start_urls,directory):
     for url in start_urls:
 
         # get all reviews for 'url' and 'lang'
-        items = scrape(url, lang)
+        items = scrape(url[1], lang)
 
         if not items:
             print('No reviews')
                
         else:
       
-            filename = directory+'/'+url.split('Reviews-')[1][:-5] + '__' + lang
+            filename = directory+'/'+str(url[0])
             print('filename:', filename)
             with open(filename+'.txt','w') as file_handler:
                 for item in items:
@@ -238,4 +238,4 @@ def main(start_urls,directory):
                         file_handler.write('-------------------------------------------------------------------'+'\n\n')
 
 if __name__ == '__main__':
-    main(start_urls)        
+    main(start_urls,directory)        
