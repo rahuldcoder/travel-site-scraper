@@ -73,6 +73,46 @@ def parse(session, url):
         print('[parse] no soup:', url)
         return
 
+    #Scraping the about section page
+
+    hotel_amenities = soup.find_all('div',class_ ='hrAmenitiesSectionWrapper')
+    
+    
+    textItem=[]
+
+    for elements in hotel_amenities :
+        item = elements.find_all('div',class_='textitem')
+        textItem.append(item)
+
+    all_amenities = list()
+
+    for item in textItem[0]:
+        all_amenities.append(item.text)
+
+    print(all_amenities)
+
+
+     # Getting Traveller Ratings under category Excellent,Very Good,Average ,Poor, Terrible
+
+    traveller_rating_dict = dict()
+
+    count = soup.findAll('span',class_="is-shown-at-tablet")
+
+    traveller_rating_dict['Excellent'] = count[1].text
+    traveller_rating_dict['Very good'] = count[3].text
+    traveller_rating_dict['Average'] = count[5].text
+    traveller_rating_dict['Poor'] = count[7].text
+    traveller_rating_dict['Terrible'] = count[9].text
+
+    print('Dictionary Printing')
+
+    print('---------------------------')
+    print(traveller_rating_dict)
+    print('---------------------------')
+
+ 
+
+
     # get number of reviews in all languages
     num_reviews = soup.find('span', class_='reviews_header_count').text 
     num_reviews = num_reviews[1:-1] 
@@ -81,6 +121,14 @@ def parse(session, url):
     print('[parse] num_reviews ALL:', num_reviews)
 
     url_template = url.replace('.html', '-or{}.html')
+
+    # get number of reviews in English language
+    num_reviews = soup.select_one('div[data-value="en"] span').text # get text
+    num_reviews = num_reviews[1:-1] # remove `( )`
+    num_reviews = num_reviews.replace(',', '') # remove `,` in number (ie. 1,234)
+    num_reviews = int(num_reviews) # convert text into integer
+    print('[parse] num_reviews ENGLISH:', num_reviews)
+
     
     # every subpages has 5 reviews
     
@@ -188,8 +236,20 @@ def parse_reviews(session, url):
         bubble_rating = bubble_rating[1].split('_')[-1]
 
         item = {
-        
+             'hotel name': hotel_name,
+
+            'review title': review.find('span', class_='noQuotes').text,
             'review_body': review.find('p', class_='partial_entry').text,
+            # 'ratingDate' instead of 'relativeDate'
+            'review date': review.find('span', class_='ratingDate')['title'],
+
+            'contributions': contributions,  # former 'num_reviews_reviewer'
+            'helpful vote': helpful_vote,  # new
+
+            # former 'reviewer_name'
+            'user name': review.find('div', class_='info_text').find('div').text,
+            'user location': user_loc,  # new
+            'rating': bubble_rating,
          
         }
 
