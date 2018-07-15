@@ -5,8 +5,8 @@ import get_review
 import pros_cons
 
 
-#filename = input('Enter the csv file'+'\n')
-filename = 'Rahul.csv'
+filename = input('Enter the csv file'+'\n')
+
 
 #reading csv file
 try :

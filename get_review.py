@@ -3,7 +3,7 @@ from bs4 import BeautifulSoup
 import csv                     
 import webbrowser              
 import json
-
+import os
 
 def display(content, filename='output.html'):
     with open(filename, 'wb') as f:
@@ -287,8 +287,9 @@ def main(start_urls,directory):
             print('No reviews')
                
         else:
-      
-            filename = directory+'/'+str(url[0])
+            
+            os.mkdir('directory/str(url[0])')
+            filename = directory+'/'+str(url[0])+'/'+str(url[0])
             print('filename:', filename)
             with open(filename+'.txt','w') as file_handler:
                 for item in items:

@@ -1,3 +1,27 @@
 # travel-site-scraper
 program to scrape trip advisor and oyester website
+
+
+# input
+
+A csv file containing two columns source and target
+
+#output
+
+The files in the output will go into their corresponding folders which are the column names
+
+SO like if the csv file is as follows:
+
+Source,Target
+https://www.tripadvisor.ca/Hotel_Review-g1480252-d316623-Reviews-Kuredu_Island_Resort_Spa-Kuredu.html  ,   https://www.oyster.com/maldives/hotels/kuredu-island-resort-and-spa/
+https://www.oyster.com/maldives/hotels/kuredu-island-resort-and-spa/  ,   https://www.oyster.com/maldives/hotels/kuredu-island-resort-and-spa/
+
+then all there will be folders created for each file and the name of the folder would be starting from 0,1,2 as in the row numbers.
+
+
+For tripadvisor links the data would be as follows:
+
+ 
+ 
   
+
