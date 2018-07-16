@@ -4,6 +4,7 @@ import csv
 import webbrowser              
 import json
 import os
+import collections
 
 def display(content, filename='output.html'):
     with open(filename, 'wb') as f:
@@ -234,6 +235,8 @@ def parse_reviews(session, url):
 
         bubble_rating = review.select_one('span.ui_bubble_rating')['class']
         bubble_rating = bubble_rating[1].split('_')[-1]
+
+        item = collections.OrderedDict()
 
         item = {
              'hotel name': hotel_name,
