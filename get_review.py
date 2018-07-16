@@ -208,7 +208,7 @@ def parse_reviews(session, url):
         return
 
     items = []
-    reviewer_names = dict()
+    #reviewer_names = dict()
 
     
     # find all reviews on page
