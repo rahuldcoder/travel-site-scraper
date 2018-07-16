@@ -208,7 +208,9 @@ def parse_reviews(session, url):
         return
 
     items = []
+    reviewer_names = dict()
 
+    
     # find all reviews on page
     #for idx, review in enumerate(soup.find_all('div', class_='review-container')): # reviews on normal page
     for idx, review in enumerate(soup.find_all('div', class_='reviewSelector')):  # reviews on page after click "More"
