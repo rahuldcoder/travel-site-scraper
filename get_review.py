@@ -150,8 +150,8 @@ def parse(session, url):
             break
 
         offset += 5
-
-    return items
+    
+    return items,traveller_rating_dict,all_amenities
 
 #----------------------------------------------------------------------
 
@@ -236,7 +236,7 @@ def parse_reviews(session, url):
         bubble_rating = review.select_one('span.ui_bubble_rating')['class']
         bubble_rating = bubble_rating[1].split('_')[-1]
 
-        item = collections.OrderedDict()
+        item = dict()
 
         item = {
              'hotel name': hotel_name,
@@ -284,7 +284,7 @@ def main(start_urls,directory):
     for url in start_urls:
 
         # get all reviews for 'url' and 'lang'
-        items = scrape(url[1], lang)
+        items,traveller_rating_dict,all_amenities = scrape(url[1], lang)
 
         if not items:
             print('No reviews')
@@ -295,12 +295,20 @@ def main(start_urls,directory):
                 os.makedirs(directory+'/'+str(url[0]))
             filename = directory+'/'+str(url[0])+'/'+str(url[0])
             print('filename:', filename)
-            with open(filename+'.txt','w') as file_handler:
+
+            with open(filename+'.json','w') as file_handler:
                 for item in items:
-                    for value in item.values():
-                        file_handler.write(value)
-                        file_handler.write('\n')
-                        file_handler.write('-------------------------------------------------------------------'+'\n\n')
+                   json.dump(item,file_handler)
+     
+            with open(filename+'_traveller_rating.json','w') as outfile:
+                json.dump(traveller_rating_dict, outfile)     
+
+
+            with open(filename+'_all_amenities.txt','w') as file_handler:
+                for item in all_amenities:
+                    file_handler.write(item+'\n')
+
+
 
 if __name__ == '__main__':
     main(start_urls,directory)        
