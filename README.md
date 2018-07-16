@@ -19,7 +19,8 @@ https://www.oyster.com/maldives/hotels/kuredu-island-resort-and-spa/  ,   https:
 then all there will be folders created for each file and the name of the folder would be starting from 0,1,2 as in the row numbers.
 
 
-For tripadvisor links the data would be as follows:
+The sample output file is also included in the repo
+
 
  
  
