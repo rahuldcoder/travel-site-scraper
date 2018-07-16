@@ -1,6 +1,7 @@
 import requests
 from bs4 import BeautifulSoup
 import pprint
+import os
 
 def parser(url,directory):
     page = requests.get(url[1])
@@ -14,9 +15,12 @@ def parser(url,directory):
     section_pros = list ( filter (lambda item: item != new_line_char, section_pros ) )
     section_cons = list ( filter (lambda item : item != new_line_char ,section_cons ) )
 
+    if not os.path.exists(directory+'/'+str(url[0])):
+        os.makedirs(directory+'/'+str(url[0]))
 
+    
     file_name = url[0]
-    file_name = directory+'/'+str(file_name)
+    file_name = directory+'/'+str(url[0])+'/'+str(file_name)
     print(url)
 
     with open(file_name+'-PROS.txt','w') as file_handle:

@@ -288,7 +288,8 @@ def main(start_urls,directory):
                
         else:
             
-            os.mkdir('directory/str(url[0])')
+            if not os.path.exists(directory+'/'+str(url[0])):
+                os.makedirs(directory+'/'+str(url[0]))
             filename = directory+'/'+str(url[0])+'/'+str(url[0])
             print('filename:', filename)
             with open(filename+'.txt','w') as file_handler:
