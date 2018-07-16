@@ -299,6 +299,7 @@ def main(start_urls,directory):
             with open(filename+'.json','w') as file_handler:
                 for item in items:
                    json.dump(item,file_handler)
+                   file_handler.write('\n\n\n\n\n')
      
             with open(filename+'_traveller_rating.json','w') as outfile:
                 json.dump(traveller_rating_dict, outfile)     
