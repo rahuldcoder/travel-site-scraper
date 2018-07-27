@@ -10,6 +10,8 @@ def parser(url,directory):
     section_pros = soup.find('section',{'class' : 'pros'}).ul.contents
     section_cons = soup.find('section',{'class' : 'cons'}).ul.contents
 
+    print(section_pros)
+
     new_line_char = '\n'
 
     section_pros = list ( filter (lambda item: item != new_line_char, section_pros ) )

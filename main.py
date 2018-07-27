@@ -45,9 +45,10 @@ for directory in headers:
     oyester_urls_no = list()
     count = 0
     for url in all_urls:
-        if ( url.startswith('https://www.oyster.com') ) :
+        if ( url.startswith('https://www.oyster') ) :
             oyester_urls.append(url)
             oyester_urls_no.append(count)
         count = count + 1    
     oyester_data = zip(oyester_urls_no,oyester_urls)    
+  
     pros_cons.main(oyester_data,directory)        
