@@ -85,33 +85,37 @@ def parse(session, url):
         item = elements.find_all('div',class_='textitem')
         textItem.append(item)
 
-    all_amenities = list()
+   
 
-    for item in textItem[0]:
-        all_amenities.append(item.text)
+    if textItem:
+        all_amenities = list()
+        for item in textItem[0]:
+            all_amenities.append(item.text)
 
-    print(all_amenities)
+        print(all_amenities)
 
+   
 
      # Getting Traveller Ratings under category Excellent,Very Good,Average ,Poor, Terrible
 
     traveller_rating_dict = dict()
 
     count = soup.findAll('span',class_="is-shown-at-tablet")
+    
+    if count:
+        traveller_rating_dict['Excellent'] = count[1].text
+        traveller_rating_dict['Very good'] = count[3].text
+        traveller_rating_dict['Average'] = count[5].text
+        traveller_rating_dict['Poor'] = count[7].text
+        traveller_rating_dict['Terrible'] = count[9].text
 
-    traveller_rating_dict['Excellent'] = count[1].text
-    traveller_rating_dict['Very good'] = count[3].text
-    traveller_rating_dict['Average'] = count[5].text
-    traveller_rating_dict['Poor'] = count[7].text
-    traveller_rating_dict['Terrible'] = count[9].text
+        print('Dictionary Printing')
 
-    print('Dictionary Printing')
+        print('---------------------------')
+        print(traveller_rating_dict)
+        print('---------------------------')
 
-    print('---------------------------')
-    print(traveller_rating_dict)
-    print('---------------------------')
-
- 
+    
 
 
     # get number of reviews in all languages
